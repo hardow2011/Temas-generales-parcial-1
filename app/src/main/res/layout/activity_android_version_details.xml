@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdnroidVersionDetails">
+    tools:context=".AndroidVersionDetails">
 
     <TextView
         android:id="@+id/details_text_view"
@@ -55,4 +55,5 @@
         android:text="version_text_view"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
         app:layout_constraintStart_toEndOf="@+id/textView2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

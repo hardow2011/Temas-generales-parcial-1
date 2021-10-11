@@ -10,8 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TemasGeneralesParcial1">
         <activity
-            android:name=".AdnroidVersionDetails"
-            android:exported="true" />
+            android:name=".AndroidVersionDetails"
+            android:exported="true">
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".MainActivity"
+            />
+            </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -2,6 +2,7 @@ package com.example.temasgeneralesparcial1;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -222,6 +223,8 @@ public class AndroidListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Intent intent = new Intent(getContext(), AndroidVersionDetails.class);
+
         View view = inflater.inflate(R.layout.fragment_android_list, container, false);
 
         String[] menuItems = {"Do something", "Selse", "Third"};
@@ -239,18 +242,16 @@ public class AndroidListFragment extends Fragment {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                PlaceholderVersion selectedVersion = ITEMS.get(position);
+
+                intent.putExtra("details_text_view", selectedVersion.getDetails());
+                intent.putExtra("internal_code_text_view", selectedVersion.getInternalCodeName());
+                intent.putExtra("version_text_view", selectedVersion.getVersionNumber());
+
                 PlaceholderVersion selectedPlaceholder = ITEMS.get(position);
 
-                AlertDialog alertDialog = new AlertDialog.Builder( getActivity()).create();
-                alertDialog.setTitle("Alert");
-                alertDialog.setMessage("Alert message to be shown");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
+                //        start activity with intent
+                startActivity(intent);
             }
         });
 
