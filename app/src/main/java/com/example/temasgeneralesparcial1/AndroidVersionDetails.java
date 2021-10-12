@@ -34,5 +34,11 @@ public class AndroidVersionDetails extends AppCompatActivity {
             is_supported_check_box.setChecked(true);
         }
 
+        TextView level_text_view = findViewById(R.id.level_text_view);
+        level_text_view.setText(intent.getStringExtra("level_text_view"));
+
+        TextView link_button = findViewById(R.id.link_button);
+        link_button.setText(intent.getStringExtra("link_button"));
+
     }
 }

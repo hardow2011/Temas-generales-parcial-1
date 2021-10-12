@@ -249,6 +249,9 @@ public class AndroidListFragment extends Fragment {
                 intent.putExtra("version_text_view", selectedVersion.getVersionNumber());
                 intent.putExtra("release_date_text_view", selectedVersion.getReleaseDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                 intent.putExtra("is_supported_check_box", selectedVersion.isSupported());
+                intent.putExtra("level_text_view", String.valueOf(selectedVersion.getLevel()));
+                intent.putExtra("level_text_view", String.valueOf(selectedVersion.getLevel()));
+                intent.putExtra("link_button", selectedVersion.getLink());
 
                 PlaceholderVersion selectedPlaceholder = ITEMS.get(position);
 
