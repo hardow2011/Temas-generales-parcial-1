@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -174,7 +175,7 @@ public class AndroidListFragment extends Fragment {
 
         @Override
         public String toString() {
-            return getName() + " " + getVersionNumber();
+            return getName();
         }
 
     }
@@ -227,7 +228,6 @@ public class AndroidListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_android_list, container, false);
 
-        String[] menuItems = {"Do something", "Selse", "Third"};
         ListView android_list_view = (ListView) view.findViewById(R.id.android_list_view);
 
         ArrayAdapter<PlaceholderVersion> listViewAdapter = new ArrayAdapter<PlaceholderVersion>(
@@ -247,6 +247,8 @@ public class AndroidListFragment extends Fragment {
                 intent.putExtra("details_text_view", selectedVersion.getDetails());
                 intent.putExtra("internal_code_text_view", selectedVersion.getInternalCodeName());
                 intent.putExtra("version_text_view", selectedVersion.getVersionNumber());
+                intent.putExtra("release_date_text_view", selectedVersion.getReleaseDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+                intent.putExtra("is_supported_check_box", selectedVersion.isSupported());
 
                 PlaceholderVersion selectedPlaceholder = ITEMS.get(position);
 

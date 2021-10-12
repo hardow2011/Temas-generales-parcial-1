@@ -4,9 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_adnroid_version_details.xml" value="0.35833333333333334" />
-        <entry key="app/src/main/res/layout/activity_android_version_details.xml" value="0.35833333333333334" />
+        <entry key="app/src/main/res/layout/activity_android_version_details.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_android_list.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_details.xml" value="0.35833333333333334" />
       </map>
     </option>
   </component>
