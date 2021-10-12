@@ -187,7 +187,7 @@ public class AndroidListFragment extends Fragment {
 
         @Override
         public String toString() {
-            return getName();
+            return getName() + " " + getVersionNumber();
         }
 
     }
@@ -238,25 +238,32 @@ public class AndroidListFragment extends Fragment {
         super.onRequestPermissionsResult(requestCode,
                 permissions,
                 grantResults);
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        alertDialog.setTitle("Permission alter");
+        alertDialog.setMessage(String.valueOf(grantResults.length));
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
 
-        switch (requestCode) {
-            case 200: {
-                if (grantResults.length < 4) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                    alertDialog.setTitle("Permission alter");
-                    alertDialog.setMessage("You are missing permissions");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
-                }
-                else {
-//                    startActivity(intent);
-                }
-            }
+
+        if (grantResults.length == 3) {
+            startActivity(intent);
+        }
+        else {
+            //                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+            alertDialog.setTitle("Permission alter");
+            alertDialog.setMessage("You are missing permissions");
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+            alertDialog.show();
         }
 
 //        int readStoragePermission = ContextCompat.checkSelfPermission(getContext(), READ_EXTERNAL_STORAGE);
