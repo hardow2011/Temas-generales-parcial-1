@@ -1,12 +1,21 @@
 package com.example.temasgeneralesparcial1;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -30,6 +39,9 @@ import java.util.List;
  */
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class AndroidListFragment extends Fragment {
+
+    private List<String> permissionList;
+    private Intent intent;
 
     /**
      * An array of sample (placeholder) items.
@@ -211,6 +223,82 @@ public class AndroidListFragment extends Fragment {
         return fragment;
     }
 
+    private void checkAndrequestPermissions(List<String> permissionList) {
+        String[] permissionArray = new String[permissionList.size()];
+        permissionArray = permissionList.toArray(permissionArray);
+//        ActivityCompat.requestPermissions(getContext(), permissionArray, 200);
+        requestPermissions(permissionArray, 200);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode,
+                permissions,
+                grantResults);
+
+        switch (requestCode) {
+            case 200: {
+                if (grantResults.length < 4) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                    alertDialog.setTitle("Permission alter");
+                    alertDialog.setMessage("You are missing permissions");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+                else {
+//                    startActivity(intent);
+                }
+            }
+        }
+
+//        int readStoragePermission = ContextCompat.checkSelfPermission(getContext(), READ_EXTERNAL_STORAGE);
+//        int writeStoragePermission = ContextCompat.checkSelfPermission(getContext(), ACCESS_FINE_LOCATION);
+//        int cameraPermission = ContextCompat.checkSelfPermission(getContext(), CAMERA);
+//
+//        Boolean permissionMissing = false;
+//
+//        if (!checkPermission(readStoragePermission) || !checkPermission(writeStoragePermission)) {
+//            permissionMissing = true;
+//            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+//            alertDialog.setTitle("Permission alter");
+//            alertDialog.setMessage("You are missing a storage permission");
+//            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//            alertDialog.show();
+//        }
+//        if (!checkPermission(cameraPermission)) {
+//            permissionMissing = true;
+//            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+//            alertDialog.setTitle("Permission alert");
+//            alertDialog.setMessage("You are missing the camera permission");
+//            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//            alertDialog.show();
+//        }
+//
+//        if(permissionMissing == false) {
+//            startActivity(intent);
+//        }
+
+
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,11 +308,23 @@ public class AndroidListFragment extends Fragment {
         }
     }
 
+    public boolean checkPermission(int permission) {
+        if (permission == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Intent intent = new Intent(getContext(), AndroidVersionDetails.class);
+        permissionList = new ArrayList<>();
+        permissionList.add(READ_EXTERNAL_STORAGE);
+        permissionList.add(WRITE_EXTERNAL_STORAGE);
+        permissionList.add(CAMERA);
+
+        intent = new Intent(getContext(), AndroidVersionDetails.class);
 
         View view = inflater.inflate(R.layout.fragment_android_list, container, false);
 
@@ -253,10 +353,11 @@ public class AndroidListFragment extends Fragment {
                 intent.putExtra("level_text_view", String.valueOf(selectedVersion.getLevel()));
                 intent.putExtra("link_button", selectedVersion.getLink());
 
-                PlaceholderVersion selectedPlaceholder = ITEMS.get(position);
 
-                //        start activity with intent
-                startActivity(intent);
+                checkAndrequestPermissions(permissionList);
+
+//                        start activity with intent
+
             }
         });
 
